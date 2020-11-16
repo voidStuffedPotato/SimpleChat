@@ -2,8 +2,8 @@
 Содержит класс-клиент
 """
 
-import socket
 import json
+import socket
 import struct
 
 HOST = '127.0.0.1'
@@ -69,5 +69,5 @@ class Client:
 
 
 if __name__ == '__main__':
-    client = Client(HOST, PORT, 'sample_name')
-    print(client.send_message('common', 'Нужно больше золота\n'*10))
+    CLIENT = Client(HOST, PORT, 'sample_name')
+    print(CLIENT.send_message('common', 'Нужно больше золота\n'*10))

@@ -18,7 +18,9 @@ class DBConnection:
     """
 
     def __init__(self):
-        self.engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:postgres@localhost/chatdb', echo=False)
+        self.engine = sqlalchemy.create_engine(
+            'postgresql+psycopg2://postgres:postgres@localhost/chatdb',
+            echo=False)
         self.sessionmaker = sessionmaker(bind=self.engine)
 
     @staticmethod
@@ -30,6 +32,7 @@ class DBConnection:
         Base = declarative_base()
 
         class Chat(Base):
+            """Декларатив SQLAlchemy"""
             __tablename__ = name
             id = Column(Integer, primary_key=True)
             ip = Column(String)
@@ -44,7 +47,8 @@ class DBConnection:
 
     def return_chat(self, table_name: str):
         """
-        Возвращает последние 20 сообщений чата из таблицы в БД, в случае отсутствия возращает 'Сообщений нет'
+        Возвращает последние 20 сообщений чата из таблицы в БД,
+        в случае отсутствия возращает 'Сообщений нет'
         table_name - имя таблицы в БД
         """
         session = self.sessionmaker()
@@ -128,7 +132,8 @@ class Message:
 
         response = DBConnection().return_chat(self._dict['chat_name'])
 
-        json_part = json.dumps(dict(chat_name=self._dict['chat_name'], text=response), ensure_ascii=False)
+        json_part = json.dumps(dict(chat_name=self._dict['chat_name'], text=response),
+                               ensure_ascii=False)
         self._out_b = struct.pack('>I', len(json_part)) + json_part.encode('utf-8')
         self.processed = True
 
